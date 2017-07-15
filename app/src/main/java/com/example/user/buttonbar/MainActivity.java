@@ -1,12 +1,12 @@
 package com.example.user.buttonbar;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import com.example.user.buttonbar.fragments.CameraFragment;
 import com.example.user.buttonbar.fragments.DiaryFragment;
@@ -27,7 +27,21 @@ public class MainActivity extends AppCompatActivity {
         bottomBar.setItemsFromMenu(R.menu.menu_main, new OnMenuTabClickListener() {
             @Override
             public void onMenuTabSelected(@IdRes int menuItemId) {
-                itemSelected(menuItemId);
+                switch (menuItemId) {
+                    case R.id.ButtonBar_item_1:
+                        CameraFragment cameraFragment = new CameraFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, cameraFragment).commit();
+                        break;
+                    case R.id.ButtonBar_item_2:
+                        RhymeFragment rhymeFragment = new RhymeFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, rhymeFragment).commit();
+                        break;
+                    case R.id.ButtonBar_item_3:
+                        DiaryFragment diaryFragment = new DiaryFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, diaryFragment).commit();
+                        break;
+
+                }
             }
 
             @Override
@@ -35,38 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        bottomBar.mapColorForTab(0, "#4286f4");
+        bottomBar.selectTabAtPosition(1, true);
+        bottomBar.mapColorForTab(0, "#142a4f");
         bottomBar.mapColorForTab(1, "#f4e241");
         bottomBar.mapColorForTab(2, "#000000");
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.ButtonBar_item_1:
-                CameraFragment cameraFragment = new CameraFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, cameraFragment).commit();
-                break;
-            case R.id.ButtonBar_item_2:
-                RhymeFragment rhymeFragment = new RhymeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, rhymeFragment).commit();
-                break;
-            case R.id.ButtonBar_item_3:
-                DiaryFragment diaryFragment = new DiaryFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, diaryFragment).commit();
-                break;
-
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -94,23 +80,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         quitDialog.show();
-    }
-
-    private void itemSelected(int menuItemId) {
-        switch (menuItemId) {
-            case R.id.ButtonBar_item_1:
-                CameraFragment cameraFragment = new CameraFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, cameraFragment).commit();
-                break;
-            case R.id.ButtonBar_item_2:
-                RhymeFragment rhymeFragment = new RhymeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, rhymeFragment).commit();
-                break;
-            case R.id.ButtonBar_item_3:
-                DiaryFragment diaryFragment = new DiaryFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.NavBot, diaryFragment).commit();
-                break;
-
-        }
     }
 }

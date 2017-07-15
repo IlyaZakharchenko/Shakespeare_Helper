@@ -9,9 +9,10 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:text="Rhyme"
-        android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="36sp"
+        android:textStyle="bold"
+        android:typeface="serif"
         />
 
 </LinearLayout>
