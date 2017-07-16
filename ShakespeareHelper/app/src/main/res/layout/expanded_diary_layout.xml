@@ -3,6 +3,7 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/relative_layout"
     android:padding="16dp">
 
     <EditText
@@ -42,6 +43,7 @@
 
     <EditText
         android:id="@+id/et_content"
+        android:gravity="top|start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ok_btn"
@@ -50,7 +52,7 @@
         android:layout_marginTop="8dp"
         android:scrollHorizontally="false"
         android:inputType="textMultiLine"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"/>
 
     <Button
         android:layout_width="wrap_content"
