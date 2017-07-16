@@ -1,16 +1,14 @@
 package com.example.user.buttonbar;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.user.buttonbar.fragments.CameraFragment;
-import com.example.user.buttonbar.fragments.DiaryFragment;
-import com.example.user.buttonbar.fragments.RhymeFragment;
+import com.example.user.buttonbar.fragments.camera.CameraFragment;
+import com.example.user.buttonbar.fragments.diary.DiaryFragment;
+import com.example.user.buttonbar.fragments.rhyme.RhymeFragment;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 

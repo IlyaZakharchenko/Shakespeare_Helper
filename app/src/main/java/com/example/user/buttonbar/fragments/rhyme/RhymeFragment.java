@@ -1,4 +1,4 @@
-package com.example.user.buttonbar.fragments;
+package com.example.user.buttonbar.fragments.rhyme;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,12 +13,14 @@ import com.example.user.buttonbar.R;
  * Created by User on 13.07.2017.
  */
 
-public class CameraFragment extends Fragment {
+public class RhymeFragment extends Fragment {
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.camera_bar, container, false);
+        View v = inflater.inflate(R.layout.rhyme_bar, container, false);
         return v;
     }
+
 }
