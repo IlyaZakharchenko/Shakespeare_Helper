@@ -66,7 +66,10 @@ public class RhymeTask extends AsyncTask<String, Void, ArrayList<String>> {
             for (int i = 0; i < array.length(); i++) {
                 JSONObject jsonObject = array.getJSONObject(i);
                 String oneWord = jsonObject.getString("word");
-                answer.add(oneWord);
+                String flags = jsonObject.getString("flags");
+                if(flags.contains("b")&&!flags.contains("a")){
+                    answer.add(oneWord);
+                }
             }
 
         } catch (Exception e) {
