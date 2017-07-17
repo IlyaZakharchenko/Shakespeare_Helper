@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnEditorAction;
+
 import static android.view.KeyEvent.KEYCODE_ENTER;
 
 /**
@@ -29,6 +34,7 @@ public class RhymesFragment extends Fragment {
 
     View tView;
 
+    @BindView(R.id.rhymes_text_word) EditText word;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,21 +45,21 @@ public class RhymesFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         //TODO
-
+        ButterKnife.bind(this, view);
         EventBus.getDefault().register(this);
 
         //TODO Перевод строки
-        EditText word = (EditText) view.findViewById(R.id.rhymes_text_word);
-        word.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (keyCode == KEYCODE_ENTER) {
-                    return true;
-                }
-                return false;
-            }
-        });
+//        EditText word = (EditText) view.findViewById(R.id.rhymes_text_word);
+//        word.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//
+//                if (keyCode == KEYCODE_ENTER) {
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
 
         Button btn = (Button) view.findViewById(R.id.rhymes_buttin_ok);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,23 @@ public class RhymesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @OnEditorAction(R.id.rhymes_text_word) boolean onEnterClicK(int actionIme) {
+        switch (actionIme) {
+            case EditorInfo.IME_ACTION_DONE :
+
+
+                getActivity().findViewById(R.id.rhymes_list).setVisibility(View.INVISIBLE);
+                getActivity().findViewById(R.id.rhymes_progress_bar).setVisibility(View.VISIBLE);
+                //EditText word = (EditText) view.findViewById(R.id.rhymes_text_word);
+                RhymeTask rhymeTask = new RhymeTask(getActivity());
+                rhymeTask.execute(word.getText() + "");
+
+
+                return true;
+        }
+
+        return false;
+    }
 
     @Override
     public void onDestroyView() {
