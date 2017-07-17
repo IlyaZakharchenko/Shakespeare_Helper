@@ -1,7 +1,9 @@
 package ru.shakespearetools.rhms;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
@@ -20,8 +22,17 @@ import java.util.ArrayList;
 
 
 public class RhymeTask extends AsyncTask<String, Void, ArrayList<String>> {
+
+    Activity activity;
+    boolean downloadingError=false;
+
+    public RhymeTask(Activity activity) {
+        this.activity = activity;
+    }
+
     @Override
     protected ArrayList<String> doInBackground(String... params) {
+        downloadingError=false;
         Log.e("Alm", "startDownloading");
 
         ArrayList<String> answer = new ArrayList<>();
@@ -51,11 +62,11 @@ public class RhymeTask extends AsyncTask<String, Void, ArrayList<String>> {
 
         } catch (MalformedURLException e) {
             Log.e("Alm", "errorDownloading");
-            // TODO Auto-generated catch block
+            downloadingError=true;
             e.printStackTrace();
         } catch (IOException e) {
             Log.e("Alm", "errorDownloading");
-            // TODO Auto-generated catch block
+            downloadingError=true;
             e.printStackTrace();
         }
 
@@ -83,6 +94,10 @@ public class RhymeTask extends AsyncTask<String, Void, ArrayList<String>> {
 
     @Override
     protected void onPostExecute(ArrayList<String> strings) {
+        if(downloadingError){
+            Log.e("Alm", "Toast?");
+            Toast.makeText(activity,"Downloading error",Toast.LENGTH_LONG).show();
+        }
 
         for (String a :
                 strings) {

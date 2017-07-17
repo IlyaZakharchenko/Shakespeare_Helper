@@ -63,7 +63,7 @@ public class RhymesFragment extends Fragment {
                 getActivity().findViewById(R.id.rhymes_list).setVisibility(View.INVISIBLE);
                 getActivity().findViewById(R.id.rhymes_progress_bar).setVisibility(View.VISIBLE);
                 EditText word = (EditText) view.findViewById(R.id.rhymes_text_word);
-                RhymeTask rhymeTask = new RhymeTask();
+                RhymeTask rhymeTask = new RhymeTask(getActivity());
                 rhymeTask.execute(word.getText() + "");
 
             }
