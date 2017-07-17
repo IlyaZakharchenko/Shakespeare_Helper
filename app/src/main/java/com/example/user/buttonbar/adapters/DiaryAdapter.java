@@ -1,4 +1,4 @@
-package com.example.user.buttonbar.fragments.diary;
+package com.example.user.buttonbar.adapters;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.user.buttonbar.R;
+import com.example.user.buttonbar.models.Diary;
 
 import java.util.List;
 

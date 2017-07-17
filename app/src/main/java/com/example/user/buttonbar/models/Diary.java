@@ -1,4 +1,4 @@
-package com.example.user.buttonbar.fragments.diary;
+package com.example.user.buttonbar.models;
 
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;

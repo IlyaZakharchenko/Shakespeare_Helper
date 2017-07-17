@@ -1,4 +1,6 @@
-package com.example.user.buttonbar.fragments.diary;
+package com.example.user.buttonbar.models;
+
+import com.example.user.buttonbar.models.Diary;
 
 import java.io.Serializable;
 import java.util.List;

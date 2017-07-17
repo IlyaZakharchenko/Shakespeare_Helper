@@ -1,7 +1,6 @@
 package com.example.user.buttonbar.fragments.diary;
 
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.buttonbar.R;
+import com.example.user.buttonbar.models.Diary;
 
 public class DiaryExpandedActivity extends AppCompatActivity {
     Diary diary;
