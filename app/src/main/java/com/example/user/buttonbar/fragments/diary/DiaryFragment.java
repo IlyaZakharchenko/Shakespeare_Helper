@@ -3,6 +3,7 @@ package com.example.user.buttonbar.fragments.diary;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
+import android.icu.util.TimeZone;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import com.example.user.buttonbar.R;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -38,6 +40,7 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     EditText text_surname;
     Button btn;*/
 
+    public static final String EXTRA_REQUEST_CODE = "request code";
     public static final String EXTRA_DIARY = "diary";
     public static final String KEY_DIARIES = "diaries";
     public static final int DIARY_CREATION_REQUEST_CODE = 1;
@@ -112,12 +115,12 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
 
         intent = new Intent(getContext(), DiaryExpandedActivity.class);
         gson = new Gson();
-        calendar.set(Calendar.HOUR, TIME_OF_DIARY_WRITING);
+        calendar.set(Calendar.HOUR_OF_DAY, TIME_OF_DIARY_WRITING);
         sharedPreferences = this.getActivity().getPreferences(MODE_PRIVATE);
         diaryList = getDiaryList();
         adapter = new DiaryAdapter(diaryList.getDiaries(), this);
 
-        if (Calendar.getInstance().get(Calendar.HOUR) >= calendar.get(Calendar.HOUR)) {
+        if (Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow")).get(Calendar.HOUR_OF_DAY) >= calendar.get(Calendar.HOUR_OF_DAY) && !checkLastDiaryDate()) {
             diary = new Diary("", "");
             intent.putExtra(EXTRA_DIARY, diary);
             startActivityForResult(intent, DIARY_CREATION_REQUEST_CODE);
@@ -134,7 +137,6 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
         intent.putExtra(EXTRA_DIARY, diary);
         startActivityForResult(intent, DIARY_EDITING_REQUEST_CODE);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -178,5 +180,16 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
         diaryList.updateList(diary);
         adapter.notifyDataSetChanged();
         putDiaryList(diaryList);
+    }
+
+    public void startActivityForResult(Intent intent, int requestCode) {
+        intent.putExtra(EXTRA_REQUEST_CODE, requestCode);
+        super.startActivityForResult(intent, requestCode);
+    }
+
+    private boolean checkLastDiaryDate() {
+        List<Diary> diaries = diaryList.getDiaries();
+        int size = diaries.size();
+        return size > 0 && diaries.get(diaries.size() - 1).getCreationDate().equals(Diary.dateFormat.format(calendar.getTime()));
     }
 }

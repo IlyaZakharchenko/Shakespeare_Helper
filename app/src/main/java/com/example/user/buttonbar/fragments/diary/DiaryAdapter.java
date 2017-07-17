@@ -1,5 +1,7 @@
 package com.example.user.buttonbar.fragments.diary;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,6 @@ import java.util.List;
 
 public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHolder> {
 
-
-
     private List<Diary> diaries;
     private OnDiaryClickListener listener;
 
@@ -26,15 +26,6 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
         this.diaries = diaries;
         this.listener = listener;
     }
-
-    /*public void updateData(Diary diary) {
-        diaries.add(diary);
-        notifyDataSetChanged();
-    }
-    public void updateData(Diary diary, int position) {
-        diaries.set(position, diary);
-        notifyDataSetChanged();
-    }*/
 
     class DiaryViewHolder extends RecyclerView.ViewHolder {
 
@@ -58,6 +49,7 @@ public class DiaryAdapter extends RecyclerView.Adapter<DiaryAdapter.DiaryViewHol
                 .inflate(R.layout.diary_item_layout, parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(final DiaryViewHolder holder, int position) {
         holder.tittle.setText(diaries.get(position).getTittle());

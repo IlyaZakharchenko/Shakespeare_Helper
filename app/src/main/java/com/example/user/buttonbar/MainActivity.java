@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        bottomBar.selectTabAtPosition(1, true);
+        //bottomBar.selectTabAtPosition(1, true);
         bottomBar.mapColorForTab(0, "#142a4f");
         bottomBar.mapColorForTab(1, "#f4e241");
         bottomBar.mapColorForTab(2, "#000000");

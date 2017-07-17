@@ -14,10 +14,6 @@ public class DiaryList implements Serializable {
         return diaries;
     }
 
-    public void setDiaries(List<Diary> diaries) {
-        this.diaries = diaries;
-    }
-
     public DiaryList(List<Diary> diaries) {
 
         this.diaries = diaries;
