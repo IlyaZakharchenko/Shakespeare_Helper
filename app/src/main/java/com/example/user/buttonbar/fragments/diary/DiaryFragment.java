@@ -12,10 +12,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.user.buttonbar.R;
+import com.example.user.buttonbar.ShowPopUpWindow;
 import com.example.user.buttonbar.adapters.DiaryAdapter;
 import com.example.user.buttonbar.models.Diary;
 import com.example.user.buttonbar.models.DiaryList;
@@ -34,20 +38,19 @@ import static android.content.Context.MODE_PRIVATE;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClickListener {
 
-    /*EditText text_name;
-    EditText text_surname;
-    Button btn;*/
-
     public static final String EXTRA_REQUEST_CODE = "request code";
     public static final String EXTRA_DIARY = "diary";
     public static final String KEY_DIARIES = "diaries";
     public static final int DIARY_CREATION_REQUEST_CODE = 1;
     public static final int DIARY_EDITING_REQUEST_CODE = 2;
-    private final int TIME_OF_DIARY_WRITING = 0;
+    private static final int DIARY_TIME = 3;
     private final Calendar calendar = Calendar.getInstance();
 
     DiaryAdapter adapter;
     RecyclerView recyclerView;
+
+    int hourOfDiaryWriting;
+    int minuteOfDiaryWriting;
 
     Intent intent;
     Gson gson;
@@ -60,51 +63,21 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_diary, container, false);
+        setHasOptionsMenu(true);
         return v;
     }
 
-    /*@Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        text_name = (EditText) view.findViewById(R.id.et_name);
-        text_surname = (EditText) view.findViewById(R.id.et_surname);
-
-        btn = (Button) view.findViewById(R.id.btn);
-
-        text_name.addTextChangedListener(mTextWatcher);
-        text_surname.addTextChangedListener(mTextWatcher);
-
-        checkFieldsForEmptyValues();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_diary_fragment, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
-    private TextWatcher mTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            // check Fields For Empty Values
-            checkFieldsForEmptyValues();
-        }
-    };
-
-    void checkFieldsForEmptyValues(){
-
-        String s1 = text_name.getText().toString();
-        String s2 = text_surname.getText().toString();
-
-        if(s1.equals("")|| s2.equals("")){
-            btn.setEnabled(false);
-        } else {
-            btn.setEnabled(true);
-        }
-    }*/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(getContext(), ShowPopUpWindow.class);
+        startActivityForResult(intent, DIARY_TIME);
+        return true;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -113,12 +86,11 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
 
         intent = new Intent(getContext(), DiaryExpandedActivity.class);
         gson = new Gson();
-        calendar.set(Calendar.HOUR_OF_DAY, TIME_OF_DIARY_WRITING);
         sharedPreferences = this.getActivity().getPreferences(MODE_PRIVATE);
         diaryList = getDiaryList();
         adapter = new DiaryAdapter(diaryList.getDiaries(), this);
 
-        if (Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow")).get(Calendar.HOUR_OF_DAY) >= calendar.get(Calendar.HOUR_OF_DAY) && !checkLastDiaryDate()) {
+        if (checkTime() && !checkLastDiaryDate()) {
             diary = new Diary("", "");
             intent.putExtra(EXTRA_DIARY, diary);
             startActivityForResult(intent, DIARY_CREATION_REQUEST_CODE);
@@ -147,6 +119,11 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
                 case DIARY_EDITING_REQUEST_CODE:
                     update(currentDiary, adapter.getPosition(diary));
                     break;
+                case DIARY_TIME:
+                    hourOfDiaryWriting = data.getIntExtra(ShowPopUpWindow.EXTRA_HOUR, 0);
+                    minuteOfDiaryWriting = data.getIntExtra(ShowPopUpWindow.EXTRA_MINUTE, 0);
+                    break;
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -189,5 +166,10 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
         List<Diary> diaries = diaryList.getDiaries();
         int size = diaries.size();
         return size > 0 && diaries.get(diaries.size() - 1).getCreationDate().equals(Diary.dateFormat.format(calendar.getTime()));
+    }
+
+    private boolean checkTime() {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
+        return cal.get(Calendar.HOUR_OF_DAY) >= hourOfDiaryWriting && cal.get(Calendar.MINUTE) >= minuteOfDiaryWriting;
     }
 }
