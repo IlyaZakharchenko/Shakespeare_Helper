@@ -60,6 +60,8 @@ public class RhymesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                getActivity().findViewById(R.id.rhymes_list).setVisibility(View.INVISIBLE);
+                getActivity().findViewById(R.id.rhymes_progress_bar).setVisibility(View.VISIBLE);
                 EditText word = (EditText) view.findViewById(R.id.rhymes_text_word);
                 RhymeTask rhymeTask = new RhymeTask();
                 rhymeTask.execute(word.getText() + "");
@@ -89,5 +91,7 @@ public class RhymesFragment extends Fragment {
                 android.R.layout.simple_list_item_1, words);
 
         lvMain.setAdapter(adapter);
+        getActivity().findViewById(R.id.rhymes_list).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.rhymes_progress_bar).setVisibility(View.INVISIBLE);
     }
 }
