@@ -31,23 +31,32 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by User on 13.07.2017.
- */
-
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClickListener {
 
+    //  Ключи для Extra
+
     public static final String EXTRA_REQUEST_CODE = "request code";
     public static final String EXTRA_DIARY = "diary";
+
+    // Ключи дял Shared Preferences
+
     public static final String KEY_DIARIES = "diaries";
+    public static final String KEY_HOURS = "hours";
+    public static final String KEY_MINUTES = "minutes";
+
+    // Коды запроса для Result Activity
+
     public static final int DIARY_CREATION_REQUEST_CODE = 1;
     public static final int DIARY_EDITING_REQUEST_CODE = 2;
-    private static final int DIARY_TIME = 3;
+    private static final int DIARY_TIME_REQUEST_CODE = 3;
+
     private final Calendar calendar = Calendar.getInstance();
 
     DiaryAdapter adapter;
     RecyclerView recyclerView;
+
+    // Время создания дневника
 
     int hourOfDiaryWriting;
     int minuteOfDiaryWriting;
@@ -75,7 +84,7 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(getContext(), ShowPopUpWindow.class);
-        startActivityForResult(intent, DIARY_TIME);
+        startActivityForResult(intent, DIARY_TIME_REQUEST_CODE);
         return true;
     }
 
@@ -90,15 +99,12 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
         diaryList = getDiaryList();
         adapter = new DiaryAdapter(diaryList.getDiaries(), this);
 
-        if (checkTime() && !checkLastDiaryDate()) {
-            diary = new Diary("", "");
-            intent.putExtra(EXTRA_DIARY, diary);
-            startActivityForResult(intent, DIARY_CREATION_REQUEST_CODE);
-        }
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        getTime();
+        diaryCreation();
     }
 
     @Override
@@ -119,9 +125,11 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
                 case DIARY_EDITING_REQUEST_CODE:
                     update(currentDiary, adapter.getPosition(diary));
                     break;
-                case DIARY_TIME:
+                case DIARY_TIME_REQUEST_CODE:
                     hourOfDiaryWriting = data.getIntExtra(ShowPopUpWindow.EXTRA_HOUR, 0);
                     minuteOfDiaryWriting = data.getIntExtra(ShowPopUpWindow.EXTRA_MINUTE, 0);
+                    putTime();
+                    diaryCreation();
                     break;
 
             }
@@ -171,5 +179,25 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     private boolean checkTime() {
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Moscow"));
         return cal.get(Calendar.HOUR_OF_DAY) >= hourOfDiaryWriting && cal.get(Calendar.MINUTE) >= minuteOfDiaryWriting;
+    }
+
+    private void diaryCreation() {
+        if (checkTime() && !checkLastDiaryDate()) {
+            diary = new Diary("", "");
+            intent.putExtra(EXTRA_DIARY, diary);
+            startActivityForResult(intent, DIARY_CREATION_REQUEST_CODE);
+        }
+    }
+
+    private void putTime() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_HOURS, hourOfDiaryWriting);
+        editor.putInt(KEY_MINUTES, minuteOfDiaryWriting);
+        editor.apply();
+    }
+
+    private void getTime() {
+        hourOfDiaryWriting = sharedPreferences.getInt(KEY_HOURS, 23);
+        minuteOfDiaryWriting = sharedPreferences.getInt(KEY_MINUTES, 59);
     }
 }
