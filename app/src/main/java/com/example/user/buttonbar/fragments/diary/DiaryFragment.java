@@ -182,7 +182,7 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     }
 
     private void diaryCreation() {
-        if (checkTime() /*&& *//*!checkLastDiaryDate()*/) {
+        if (checkTime() && !checkLastDiaryDate()) {
             diary = new Diary("", "");
             intent.putExtra(EXTRA_DIARY, diary);
             startActivityForResult(intent, DIARY_CREATION_REQUEST_CODE);
