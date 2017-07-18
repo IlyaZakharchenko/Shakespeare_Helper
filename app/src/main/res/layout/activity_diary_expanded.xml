@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relative_layout"
     android:padding="16dp">
 
     <EditText
-        android:inputType="textCapSentences"
         android:id="@+id/et_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,6 +16,8 @@
         android:layout_marginRight="8dp"
         android:layout_toLeftOf="@+id/tv_creation_date"
         android:layout_toStartOf="@+id/tv_created"
+        android:hint="Заголовок"
+        android:inputType="textCapSentences"
         android:maxLines="1"
         android:textColor="@android:color/black"
         android:textSize="20sp" />
@@ -43,23 +44,25 @@
 
     <EditText
         android:id="@+id/et_content"
-        android:gravity="top|start"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/ok_btn"
         android:layout_below="@+id/et_tittle"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:scrollHorizontally="false"
+        android:gravity="top|start"
+        android:hint="Содержание"
         android:inputType="textMultiLine|textCapSentences"
-        android:scrollbars="vertical"/>
+        android:scrollHorizontally="false"
+        android:scrollbars="vertical"
+        android:textStyle="italic" />
 
     <Button
+        android:id="@+id/ok_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ok_btn"
-        android:text="@string/ok"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
+        android:text="@string/ok" />
 
 </RelativeLayout>
