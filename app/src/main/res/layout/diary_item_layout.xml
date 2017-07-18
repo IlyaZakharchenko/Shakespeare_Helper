@@ -4,6 +4,9 @@
     android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:layout_marginLeft="16dp"
+    android:background="#f4e4a1"
     android:paddingTop="16dp">
 
     <TextView
@@ -68,10 +71,10 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:layout_below="@+id/tv_editing_date"
         android:layout_marginTop="16dp"
-        android:background="@android:color/black">
+        android:background="@android:color/background_dark">
     </View>
 
 </RelativeLayout>
