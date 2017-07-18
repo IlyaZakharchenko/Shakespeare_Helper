@@ -39,7 +39,7 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     public static final String EXTRA_REQUEST_CODE = "request code";
     public static final String EXTRA_DIARY = "diary";
 
-    // Ключи дял Shared Preferences
+    // Ключи для Shared Preferences
 
     public static final String KEY_DIARIES = "diaries";
     public static final String KEY_HOURS = "hours";
@@ -182,7 +182,7 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     }
 
     private void diaryCreation() {
-        if (checkTime() && !checkLastDiaryDate()) {
+        if (checkTime() /*&& *//*!checkLastDiaryDate()*/) {
             diary = new Diary("", "");
             intent.putExtra(EXTRA_DIARY, diary);
             startActivityForResult(intent, DIARY_CREATION_REQUEST_CODE);

@@ -51,7 +51,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:scrollHorizontally="false"
-        android:inputType="textMultiLine|textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:scrollbars="vertical"/>
 
     <Button
