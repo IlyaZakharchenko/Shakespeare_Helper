@@ -39,7 +39,7 @@ public class DiaryFragment extends Fragment implements DiaryAdapter.OnDiaryClick
     public static final String EXTRA_REQUEST_CODE = "request code";
     public static final String EXTRA_DIARY = "diary";
 
-    // Ключи дял Shared Preferences
+    // Ключи для Shared Preferences
 
     public static final String KEY_DIARIES = "diaries";
     public static final String KEY_HOURS = "hours";

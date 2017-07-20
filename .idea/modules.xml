@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ButtonBar.iml" filepath="$PROJECT_DIR$/ButtonBar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Shakespeare_Helper.iml" filepath="$PROJECT_DIR$/Shakespeare_Helper.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

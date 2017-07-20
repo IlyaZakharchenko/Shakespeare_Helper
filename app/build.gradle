@@ -33,6 +33,7 @@ dependencies {
     compile 'com.android.support:support-vector-drawable:25.3.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.jakewharton:butterknife:8.7.0'
+    compile 'com.jsibbold:zoomage:1.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     testCompile 'junit:junit:4.12'
 }
